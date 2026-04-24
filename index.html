@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Mi Sitio - Contador privado</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: linear-gradient(145deg, #e9f0f5 0%, #d9e3ec 100%);
+            padding: 1.5rem;
+            min-height: 100vh;
+        }
+
+        /* Contenedor principal */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 2rem;
+            overflow: hidden;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(2px);
+        }
+
+        /* Hero con fondo estático */
+        .hero {
+            background-image: url('fondo.png');
+            background-size: cover;
+            background-position: center 30%;
+            background-repeat: no-repeat;
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            border-bottom: 5px solid #f39c12;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 0.8rem;
+            letter-spacing: -0.5px;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+        .btn-formulario {
+            display: inline-block;
+            background: #f39c12;
+            color: #2c3e2e;
+            padding: 0.8rem 2rem;
+            border-radius: 60px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.2s;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+        }
+        .btn-formulario:hover {
+            background: #e67e22;
+            transform: scale(1.02);
+            color: white;
+        }
+
+        /* Secciones internas */
+        .seccion {
+            padding: 2rem 2rem 1rem;
+        }
+        .titulo {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+            position: relative;
+        }
+        .titulo:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: #f39c12;
+            margin: 0.6rem auto 0;
+            border-radius: 4px;
+        }
+
+        /* Carruseles gemelos */
+        .carrusel-wrapper {
+            margin: 1.5rem 0;
+            position: relative;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 15px 25px -10px rgba(0,0,0,0.2);
+        }
+        .carrusel-track {
+            display: flex;
+            transition: transform 0.45s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+        .carrusel-track img {
+            width: 100%;
+            max-height: 380px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+        .carrusel-track video {
+            width: 100%;
+            max-height: 340px;
+            flex-shrink: 0;
+            background: #000;
+            outline: none;
+        }
+        .carrusel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.6);
+            color: white;
+            border: none;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            z-index: 20;
+            backdrop-filter: blur(3px);
+        }
+        .carrusel-btn:hover {
+            background: #f39c12;
+            color: #1e2a2a;
+        }
+        .prev { left: 12px; }
+        .next { right: 12px; }
+
+        /* Fila video + texto lateral */
+        .fila-dual {
+            display: flex;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .video-col {
+            flex: 2;
+            min-width: 260px;
+        }
+        .texto-col {
+            flex: 1;
+            background: #fef5e8;
+            padding: 1.6rem;
+            border-radius: 28px;
+            border-left: 7px solid #f39c12;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+        }
+        .texto-col h3 {
+            font-size: 1.6rem;
+            margin-bottom: 0.8rem;
+            color: #2c3e50;
+        }
+        .texto-col p {
+            line-height: 1.5;
+            color: #2c3e4f;
+        }
+
+        /* Herramientas */
+        .tools {
+            background: #fff7ed;
+            border-radius: 28px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+            border: 1px solid #ffe0b5;
+        }
+        .tools p {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        .enlaces {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            list-style: none;
+        }
+        .enlaces a {
+            background: #f39c12;
+            color: #2c3e2e;
+            padding: 0.6rem 1.5rem;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.2s;
+            display: inline-block;
+        }
+        .enlaces a:hover {
+            background: #e67e22;
+            transform: translateY(-3px);
+            color: white;
+        }
+
+        /* Botón stats */
+        .btn-stats {
+            text-align: center;
+            margin: 2rem 0 1rem;
+        }
+        .btn-stats button {
+            background: #2c7da0;
+            border: none;
+            color: white;
+            padding: 0.8rem 2rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 5px 12px rgba(44,125,160,0.3);
+        }
+        .btn-stats button:hover {
+            background: #1f5e7a;
+            transform: scale(1.02);
+        }
+
+        /* responsive */
+        @media (max-width: 800px) {
+            .hero h1 { font-size: 2rem; }
+            .fila-dual { flex-direction: column; }
+            .carrusel-btn { width: 36px; height: 36px; font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- HERO con fondo fondo.png -->
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Bienvenido</h1>
+            <p>Ingresa al formulario, o puedes probrar y ver algunas herramientas.</p>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLScIWqNgk3ungooYelmGZRzXvZi0TXHvszHxDl1vykszVMvoxA/viewform?usp=publish-editor" class="btn-formulario">📝 Ir al formulario</a>
+        </div>
+    </div>
+
+    <div class="seccion">
+        <div class="titulo">✨ Hecha un vistazo</div>
+
+        <!-- Carrusel de imágenes -->
+        <div class="carrusel-wrapper">
+            <div class="carrusel-track" id="imgTrack">
+                <img src="1.png" alt="Imagen 1">
+                <img src="2.png" alt="Imagen 2">
+                <img src="3.png" alt="Imagen 3">
+                <img src="4.png" alt="Imagen 4">
+                <img src="5.png" alt="Imagen 5">
+            </div>
+            <button class="carrusel-btn prev" onclick="prevSlide('img')">❮</button>
+            <button class="carrusel-btn next" onclick="nextSlide('img')">❯</button>
+        </div>
+
+        <!-- Fila: videos + párrafo lateral -->
+        <div class="fila-dual">
+            <div class="video-col">
+                <div class="carrusel-wrapper">
+                    <div class="carrusel-track" id="videoTrack">
+                        <video controls><source src="01.mp4" type="video/mp4">Video 1</video>
+                        <video controls><source src="02.mp4" type="video/mp4">Video 2</video>
+                        <video controls><source src="03.mp4" type="video/mp4">Video 3</video>
+                        <video controls><source src="04.mp4" type="video/mp4">Video 4</video>
+                        <video controls><source src="05.mp4" type="video/mp4">Video 5</video>
+                    </div>
+                    <button class="carrusel-btn prev" onclick="prevSlide('vid')">❮</button>
+                    <button class="carrusel-btn next" onclick="nextSlide('vid')">❯</button>
+                </div>
+            </div>
+            <div class="texto-col">
+                <h3>📌 STEAM+</h3>
+                <p>Todo lo que ves son herramientas trabajando para cumplir multiples tareas en distintas areas de estudio, ya sea para investigaciones cientificas, desarrollo de prototipos, computadoras dentro de computadoras, simuladores, inteligencia artificial, y más.</p>
+                <p>✔ Esto solo es un pequeño ejemplo de herramientas orquestadas para la implementación de un proyecto y actividades.</p>
+            </div>
+        </div>
+
+        <!-- Herramientas y enlaces -->
+        <div class="tools">
+            <p>🚀 Puedes probar algunas herramientas en este momento, divierte:</p>
+            <ul class="enlaces">
+                <li><a href="https://app.compunodo.com/" target="_blank">🔍 Programación y desarrollo.</a></li>
+                <li><a href="https://limegreen-mouse-544565.hostingersite.com/" target="_blank">✍️ CLI para que desarrolles inteligencia artificial</a></li>
+                <li><a href="https://salmon-manatee-206875.hostingersite.com/electronica/index.html" target="_blank">🖥️ →🔲 ¿Quieres crear la placa arduino, microbit o un chip mas complejo?, si es haci, click aqui.</a></li>
+                <li><a href="https://salmon-manatee-206875.hostingersite.com/visor3D/index.html" target="_blank">🖼 ¿Quires verificar tus prototipos de diseño 3d?, prueba esto.</a></li>
+            </ul>
+        </div>
+
+
+    </div>
+</div>
+
+<script>
+    // ---------- CONTADOR INVISIBLE ----------
+    fetch('contador.php').catch(e => console.warn("Contador no registrado", e));
+
+    // ---------- CARRUSELES ----------
+    let imgIndex = 0, vidIndex = 0;
+    const imgTrack = document.getElementById('imgTrack');
+    const videoTrack = document.getElementById('videoTrack');
+    let imgItems = [], vidItems = [];
+
+    function actualizarCarrusel(track, index, items) {
+        if (!items.length) return;
+        const ancho = items[0].clientWidth;
+        track.style.transform = `translateX(-${index * ancho}px)`;
+    }
+
+    function revalidarItems() {
+        if (imgTrack) imgItems = Array.from(imgTrack.children).filter(c => c.tagName === 'IMG');
+        if (videoTrack) vidItems = Array.from(videoTrack.children).filter(c => c.tagName === 'VIDEO');
+    }
+
+    window.prevSlide = function(tipo) {
+        if (tipo === 'img' && imgItems.length) {
+            imgIndex = (imgIndex - 1 + imgItems.length) % imgItems.length;
+            actualizarCarrusel(imgTrack, imgIndex, imgItems);
+        } else if (tipo === 'vid' && vidItems.length) {
+            vidIndex = (vidIndex - 1 + vidItems.length) % vidItems.length;
+            actualizarCarrusel(videoTrack, vidIndex, vidItems);
+        }
+    };
+    window.nextSlide = function(tipo) {
+        if (tipo === 'img' && imgItems.length) {
+            imgIndex = (imgIndex + 1) % imgItems.length;
+            actualizarCarrusel(imgTrack, imgIndex, imgItems);
+        } else if (tipo === 'vid' && vidItems.length) {
+            vidIndex = (vidIndex + 1) % vidItems.length;
+            actualizarCarrusel(videoTrack, vidIndex, vidItems);
+        }
+    };
+
+    window.addEventListener('resize', () => {
+        if (imgItems.length) actualizarCarrusel(imgTrack, imgIndex, imgItems);
+        if (vidItems.length) actualizarCarrusel(videoTrack, vidIndex, vidItems);
+    });
+
+    function initCarruseles() {
+        revalidarItems();
+        if (imgItems.length) actualizarCarrusel(imgTrack, imgIndex, imgItems);
+        if (vidItems.length) actualizarCarrusel(videoTrack, vidIndex, vidItems);
+    }
+    setTimeout(initCarruseles, 50);
+
+    // ---------- REDIRECCIÓN A STATS.PHP ----------
+    window.irAStats = function() {
+        window.location.href = 'stats.php';
+    };
+</script>
+</body>
+</html>

@@ -1,0 +1,307 @@
+/* ----- Reset y estilos base ----- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, 'Segoe UI', 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+    padding: 2rem;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main {
+    max-width: 1200px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 2rem;
+    box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    backdrop-filter: blur(2px);
+    transition: all 0.3s ease;
+}
+
+/* ----- HERO con fondo estático (fondo.png) ----- */
+.hero {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 4rem 2rem;
+    text-align: center;
+    position: relative;
+    border-bottom: 5px solid #ffb347;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.45);
+    border-radius: 0;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    color: white;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+}
+
+.hero h1 {
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+    letter-spacing: -0.5px;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 1.8rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn-formulario {
+    display: inline-block;
+    background: #ffb347;
+    color: #2c3e2f;
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.btn-formulario:hover {
+    background: #ff9e1f;
+    transform: scale(1.02);
+    color: #1e3c2a;
+}
+
+/* ----- Títulos de sección ----- */
+.seccion-titulo {
+    font-size: 2rem;
+    text-align: center;
+    margin: 2rem 0 1rem;
+    color: #2c3e50;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.seccion-titulo::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: #ffb347;
+    margin: 0.5rem auto 0;
+    border-radius: 4px;
+}
+
+/* ----- Carruseles ----- */
+.carrusel-container, .carrusel-videos {
+    margin: 1.5rem 1rem;
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 25px -8px rgba(0,0,0,0.2);
+}
+
+.carrusel-imagenes, .carrusel-videos {
+    background: #1e1e1e;
+}
+
+.carrusel-track, .carrusel-videos-track {
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+}
+
+.carrusel-imagenes img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    flex-shrink: 0;
+    display: block;
+}
+
+.carrusel-videos-track video {
+    width: 100%;
+    max-height: 350px;
+    flex-shrink: 0;
+    background: #000;
+    outline: none;
+}
+
+.carrusel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.6);
+    color: white;
+    border: none;
+    font-size: 2rem;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 20;
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carrusel-btn:hover {
+    background: rgba(0,0,0,0.85);
+    transform: translateY(-50%) scale(1.05);
+}
+
+.prev {
+    left: 15px;
+}
+.next {
+    right: 15px;
+}
+
+/* ----- Fila: video + párrafo lateral ----- */
+.fila-video-texto {
+    display: flex;
+    gap: 2rem;
+    margin: 2rem 1.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.carrusel-videos {
+    flex: 2;
+    min-width: 260px;
+    margin: 0;
+}
+
+.parrafo-lateral {
+    flex: 1;
+    background: #fef9e6;
+    padding: 1.5rem;
+    border-radius: 24px;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.05);
+    border-left: 6px solid #ffb347;
+}
+
+.parrafo-lateral h3 {
+    margin-top: 0;
+    font-size: 1.6rem;
+    color: #2c3e50;
+}
+
+.parrafo-lateral p {
+    line-height: 1.5;
+    margin: 0.8rem 0;
+    color: #2d3e4b;
+}
+
+/* ----- Fila herramientas ----- */
+.fila-herramientas {
+    background: #ffffffdd;
+    backdrop-filter: blur(4px);
+    margin: 2rem 1.5rem;
+    padding: 1.5rem;
+    border-radius: 28px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.08);
+    border: 1px solid rgba(255,180,71,0.5);
+}
+
+.fila-herramientas p {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+}
+
+.lista-enlaces {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0;
+}
+
+.lista-enlaces li {
+    margin: 0;
+}
+
+.lista-enlaces a {
+    text-decoration: none;
+    background: #ffb347;
+    color: #2c3e2f;
+    padding: 0.5rem 1.2rem;
+    border-radius: 40px;
+    font-weight: 500;
+    transition: all 0.25s;
+    display: inline-block;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.lista-enlaces a:hover {
+    background: #ff9c1a;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+}
+
+/* ----- Botón estadísticas ----- */
+.boton-stats {
+    text-align: center;
+    margin: 2rem 0 2rem;
+}
+
+button {
+    background: #2c7da0;
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 60px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.25s;
+    box-shadow: 0 5px 12px rgba(44,125,160,0.3);
+}
+
+button:hover {
+    background: #1f5e7a;
+    transform: scale(1.02);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+}
+
+/* ----- Responsive ----- */
+@media (max-width: 850px) {
+    body {
+        padding: 1rem;
+    }
+    .hero h1 {
+        font-size: 2rem;
+    }
+    .fila-video-texto {
+        flex-direction: column;
+    }
+    .lista-enlaces {
+        flex-direction: column;
+        align-items: center;
+    }
+    .carrusel-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 1.3rem;
+    }
+}
